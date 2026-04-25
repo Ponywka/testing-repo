@@ -1,0 +1,42 @@
+{
+  "log": {
+    "level": "info"
+  },
+  "inbounds": [
+    {
+      "type": "socks",
+      "tag": "i-socks",
+      "listen": "0.0.0.0",
+      "listen_port": 1080,
+      "sniff": false
+    }
+  ],
+  "endpoints": [
+    {
+      "type": "wireguard",
+      "tag": "o-wg",
+      "system": false,
+      "private_key": "__WG_IFACE_PRIVATE__",
+      "address": [
+        "__WG_IFACE_ADDR_V4__",
+        "__WG_IFACE_ADDR_V6__"
+      ],
+      "peers": [
+        {
+          "public_key": "__WG_PEER_PUBLIC__",
+          "address": "__WG_PEER_ENDPOINT__",
+          "port": __WG_PEER_PORT__,
+          "allowed_ips": [
+            "0.0.0.0/0",
+            "::/0"
+          ],
+          "reserved": [0, 0, 0]
+        }
+      ],
+      "mtu": __WG_MTU__
+    }
+  ],
+  "route": {
+    "final": "o-wg"
+  }
+}
