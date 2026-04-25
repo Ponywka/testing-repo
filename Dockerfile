@@ -4,7 +4,7 @@ FROM go-builder AS build_sing-box
 WORKDIR /src
 COPY ./third-party/sing-box/ ./
 RUN go mod download
-RUN go build -v -trimpath -ldflags="-s -w -buildid=" -tags with_wireguard -o sing-box ./cmd/sing-box
+RUN go build -v -trimpath -ldflags="-s -w -buildid=" -tags with_wireguard,with_gvisor -o sing-box ./cmd/sing-box
 
 FROM go-builder AS build_wgcf
 WORKDIR /src
