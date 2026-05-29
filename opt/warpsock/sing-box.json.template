@@ -1,6 +1,7 @@
 {
   "log": {
-    "level": "info"
+    "disabled": __SB_LOG_DISABLED__,
+    "level": "__SB_LOG_LEVEL__"
   },
   "inbounds": [
     {
@@ -15,7 +16,7 @@
     {
       "type": "wireguard",
       "tag": "o-wg",
-      "system": false,
+      "system": __WG_SYSTEM__,
       "private_key": "__WG_IFACE_PRIVATE__",
       "address": [
         "__WG_IFACE_ADDR_V4__",

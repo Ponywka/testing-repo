@@ -1,6 +1,6 @@
 [submodule "third-party/sing-box"]
 	path = third-party/sing-box
-	url = git@github.com:SagerNet/sing-box.git
+	url = https://github.com/SagerNet/sing-box.git
 [submodule "third-party/wgcf"]
 	path = third-party/wgcf
-	url = git@github.com:ViRb3/wgcf.git
+	url = https://github.com/ViRb3/wgcf.git

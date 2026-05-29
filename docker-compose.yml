@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  app:
+    image: warpsock
+    build:
+      context: .
+    restart: unless-stopped
+    volumes:
+      - ./app:/app
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
