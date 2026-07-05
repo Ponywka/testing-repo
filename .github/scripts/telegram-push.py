@@ -36,20 +36,31 @@ def send_telegram_message(bot_token: str, chat_id: str, text: str) -> None:
                 raise RuntimeError(f"Telegram API returned HTTP {response.status}: {body}")
 
     except Exception as exc:
-        raise RuntimeError(f"Failed to send message to chat {chat_id}: {exc}") from exc
+        raise RuntimeError(f"Failed to send message to chat: {exc}") from exc
 
 
 def build_message(event: dict) -> str:
+    repository = event.get("repository") or {}
+    repo_html_url = repository.get("html_url") or ""
+    repo_full_name = html.escape(repository.get("full_name") or "")
+    repo_link = f'<a href="{html.escape(repo_html_url)}">{repo_full_name}</a>'
+
     lines = [
-        "<b>Github event</b>",
-        "Commits:",
+        "<b>GitHub event</b>",
+        f"Commits in {repo_link}:",
     ]
 
     commits = event.get("commits") or []
     for commit in commits:
         message = commit.get("message") or ""
         message_first_line = html.escape(message.splitlines()[0] if message else "No message")
-        lines.append(f"- {message_first_line}")
+
+        commit_sha = commit.get("id") or ""
+        short_sha = commit_sha[:7]
+        commit_url = f"{repo_html_url}/commit/{commit_sha}"
+        commit_link = f'<a href="{html.escape(commit_url)}">{html.escape(short_sha)}</a>'
+
+        lines.append(f"- ({commit_link}) {message_first_line}")
 
     pusher = event.get("pusher") or {}
     pusher_name = html.escape(pusher.get("name") or "unknown")
