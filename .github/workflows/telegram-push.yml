@@ -1,0 +1,11 @@
+name: Telegram push notification
+
+on:
+  push:
+    branches:
+      - "tg-push-test"
+
+jobs:
+  telegram-push:
+    uses: Ponywka/testing-repo/.github/workflows/telegram-push.yml@tg-push
+    secrets: inherit
