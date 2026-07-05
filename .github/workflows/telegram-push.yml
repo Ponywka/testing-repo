@@ -20,8 +20,8 @@ jobs:
       - name: Checkout workflow repository
         uses: actions/checkout@v6
         with:
-          repository: Entware/.github
-          ref: master
+          repository: Ponywka/testing-repo
+          ref: tg-push
 
       - name: Send Telegram notification
         env:
