@@ -62,9 +62,14 @@ def build_message(event: dict) -> str:
 
         lines.append(f"- ({commit_link}) {message_first_line}")
 
-    pusher = event.get("pusher") or {}
-    pusher_name = html.escape(pusher.get("name") or "unknown")
-    lines.append(f"Pushed by: {pusher_name}")
+    sender = event.get("sender") or {}
+    sender_name = html.escape(sender.get("login") or "unknown")
+    sender_html_url = sender.get("html_url") or ""
+
+    if sender_html_url:
+        sender_name = f'<a href="{html.escape(sender_html_url)}">{sender_name}</a>'
+
+    lines.append(f"Pushed by: {sender_name}")
 
     return "\n".join(lines)
 
