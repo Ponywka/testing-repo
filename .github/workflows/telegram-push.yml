@@ -1,0 +1,32 @@
+name: Telegram push notification
+
+on:
+  workflow_call:
+    secrets:
+      TELEGRAM_BOT_TOKEN:
+        required: true
+      TELEGRAM_CHAT_IDS:
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout workflow repository
+        uses: actions/checkout@v6
+        with:
+          repository: Entware/.github
+          ref: master
+
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          python3 .github/scripts/telegram-push.py
